@@ -9,7 +9,7 @@ export default async function handler(
   res: NextApiResponseServerIo
 ) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({ message: "Method not allowed" });
   }
 
   try {
@@ -18,19 +18,19 @@ export default async function handler(
     const { serverId, channelId } = req.query;
 
     if (!profile) {
-      return res.status(401).json({ error: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     if (!serverId) {
-      return res.status(400).json({ error: "Server ID Missing" });
+      return res.status(400).json({ message: "Server ID Missing" });
     }
 
     if (!channelId) {
-      return res.status(400).json({ error: "Channel ID Missing" });
+      return res.status(400).json({ message: "Channel ID Missing" });
     }
 
     if (!content) {
-      return res.status(400).json({ error: "Content Missing" });
+      return res.status(400).json({ message: "Content Missing" });
     }
 
     const server = await db.server.findFirst({
@@ -48,7 +48,7 @@ export default async function handler(
     });
 
     if (!server) {
-      return res.status(404).json({ error: "Server not found" });
+      return res.status(404).json({ message: "Server not found" });
     }
 
     const channel = await db.channel.findFirst({
@@ -59,7 +59,7 @@ export default async function handler(
     });
 
     if (!channel) {
-      return res.status(404).json({ error: "Channel not found" });
+      return res.status(404).json({ message: "Channel not found" });
     }
 
     const member = server.members.find(
@@ -67,7 +67,7 @@ export default async function handler(
     );
 
     if (!member) {
-      return res.status(404).json({ error: "Member not found" });
+      return res.status(404).json({ message: "Member not found" });
     }
 
     const message = await db.message.create({

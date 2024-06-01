@@ -22,6 +22,8 @@ const findConversation = async (memberOneId: string, memberTwoId: string) => {
         AND: [
           {
             memberOneId: memberOneId,
+          },
+          {
             memberTwoId: memberTwoId,
           },
         ],
